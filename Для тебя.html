@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Секрет 💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(-45deg, #000, #1a001f, #000);
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.box {
+    text-align: center;
+}
+
+input {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+#letter {
+    display: none;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+}
+
+.heart {
+    position: absolute;
+    color: #ff4d6d;
+    animation: float 6s linear forwards;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+
+.cursor {
+    display: inline-block;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Введи секретный код 💖</h2>
+    <input id="code" placeholder="••••">
+    <br>
+    <button onclick="check()">Открыть</button>
+
+    <div id="letter">
+        <h2>💌 Тебе сообщение</h2>
+        <p id="text"></p><span class="cursor">|</span>
+    </div>
+</div>
+
+<script>
+const secretCode = "1234";
+
+const message = 
+"Если ты это читаешь — значит я всё-таки решился сказать это честно, без шуток. \n\n" +
+"Ты для меня стала не просто человеком, с которым я общаюсь. \n\n" +
+"Рядом с тобой всё как-то по-другому — спокойнее.\n\n" +
+"И я не всегда показываю это, но ты правда сильно для меня значишь.\n\n" +
+"Я не знаю, как ты это воспримешь, но я надеюсь, что без осуждения\n\n" +
+"Я просто не хотел больше держать это внутри и я не знаю как ты воспримешь эти слова, но.....\n" +
+"Я тебя люблю 💖";
+
+function check() {
+    const input = document.getElementById("code").value;
+
+    if (input === secretCode) {
+        document.getElementById("letter").style.display = "block";
+        typeWriter();
+        startHearts();
+    } else {
+        alert("Неправильный код 💔 попробуй ещё раз");
+    }
+}
+
+// эффект печати
+let i = 0;
+function typeWriter() {
+    if (i < message.length) {
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+// сердечки
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (10 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+let heartInterval;
+
+function startHearts() {
+    if (!heartInterval) {
+        heartInterval = setInterval(createHeart, 200);
+    }
+}
+</script>
+
+</body>
+</html>
